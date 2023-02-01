@@ -14,9 +14,12 @@ export default function Page() {
           <p className="text-gray-500 text-xs">Administrator</p>
         </div>
         <div>
-          <button className=" bg-yellow-600 rounded-full h-5 w-5 flex items-center justify-center hover:bg-yellow-500">
+          <Link
+            href="/admin/users/1"
+            className=" bg-yellow-600 rounded-full h-5 w-5 flex items-center justify-center hover:bg-yellow-500"
+          >
             <MdArrowForward className="text-white" />
-          </button>
+          </Link>
         </div>
       </div>
     );
@@ -24,25 +27,28 @@ export default function Page() {
   return (
     <div className="ml-24 mr-24 p-16">
       <div>
-        <p className="">Our Users</p>
+        <p className="text-2xl font-bold drop-shadow-md shadow-black">
+          Our Users
+        </p>
       </div>
       <div className="flex justify-between mt-10 mb-10 ">
         <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
           <MdOutlineSearch className="w-5 h-5 absolute ml-3" />
           <input
             type="search"
-            className="bg-white border w-72 h-12 pl-10 rounded-lg shadow-lg shadow-zinc-300 outline-none"
+            className="bg-white border w-72 h-12 pl-10 pr-5 rounded-lg shadow-lg shadow-zinc-300 outline-none"
           />
         </div>
-        <button className=" relative flex items-center text-black">
-          <MdAddBox className="w-8 h-12 text-blue-600 absolute ml-3" />
-          <Link
-            className="bg-white border p-3 w-48 pl-10 rounded-lg shadow-lg shadow-zinc-300 outline-none"
-            href="/admin/users/new"
-          >
+        <Link
+          className=" relative flex items-center text-black"
+          href="/admin/users/new"
+          passHref
+        >
+          <MdAddBox className="w-8 h-12 text-blue-600 absolute ml-2" />
+          <span className="bg-white border p-3 w-48 pl-16 rounded-lg shadow-lg shadow-zinc-300 outline-none">
             add new user
-          </Link>
-        </button>
+          </span>
+        </Link>
       </div>
       <div className="flex flex-wrap w-full justify-between">{user}</div>
     </div>
