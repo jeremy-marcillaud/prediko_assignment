@@ -64,7 +64,7 @@ export default function App() {
             className="w-72 h-12 mr-10 mt-2 pl-2 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           >
             <option value="admin">Admin</option>
-            <option value="public">Public</option>
+            <option value="dev">Developper</option>
           </select>
         </div>
         {/* <input type="number" {...register("age", { min: 18, max: 99 })} />

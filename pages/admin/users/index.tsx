@@ -1,16 +1,31 @@
 import Link from "next/link";
+import { useState } from "react";
 import { MdArrowForward, MdOutlineSearch, MdAddBox } from "react-icons/md";
-const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
+import { useUsers } from "../../../lib/hooks";
+// const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 export default function Page() {
-  const user = users.map((el, i) => {
+  const { users, isLoading, isError } = useUsers();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  if (!users && !isError) {
+    return isLoading;
+  }
+
+  const handleSearch = (e: any) => {
+    setSearchTerm(e.target.value);
+  };
+
+  let user = users.map((el: any, i: any) => {
     return (
       <div
         key={i}
         className="mb-10 w-72 h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
       >
         <div>
-          <p>David Leclerq</p>
+          <p>
+            {el.first_name} {el.last_name}
+          </p>
           <p className="text-gray-500 text-xs">Administrator</p>
         </div>
         <div>
@@ -24,6 +39,18 @@ export default function Page() {
       </div>
     );
   });
+
+  let filteredData = users;
+  if (users && searchTerm) {
+    filteredData = users.filter((user: any) => {
+      return (
+        user.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.last_name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+    console.log(user);
+  }
+
   return (
     <div className="ml-24 mr-24 p-16">
       <div>
@@ -37,6 +64,8 @@ export default function Page() {
           <input
             type="search"
             className="bg-white border w-72 h-12 pl-10 pr-5 rounded-lg shadow-lg shadow-zinc-300 outline-none"
+            value={searchTerm}
+            onChange={handleSearch}
           />
         </div>
         <Link
@@ -50,7 +79,31 @@ export default function Page() {
           </span>
         </Link>
       </div>
-      <div className="flex flex-wrap w-full justify-between">{user}</div>
+      <div className="flex flex-wrap w-full justify-between">
+        {filteredData.map((item, i) => {
+          return (
+            <div
+              key={i}
+              className="mb-10 w-72 h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
+            >
+              <div>
+                <p>
+                  {item.first_name} {item.last_name}
+                </p>
+                <p className="text-gray-500 text-xs">Administrator</p>
+              </div>
+              <div>
+                <Link
+                  href="/admin/users/1"
+                  className=" bg-yellow-600 rounded-full h-5 w-5 flex items-center justify-center hover:bg-yellow-500"
+                >
+                  <MdArrowForward className="text-white" />
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
