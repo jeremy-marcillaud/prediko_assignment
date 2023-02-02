@@ -58,7 +58,7 @@ export default function Page() {
           </span>
         </Link>
       </div>
-      <ul className="grid grid-cols-3 gap-4">
+      <ul className="grid grid-cols-3 gap-4 ">
         {filteredData?.map((item: any, i: any) => {
           return (
             <li
