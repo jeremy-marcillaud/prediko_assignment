@@ -58,12 +58,12 @@ export default function Page() {
           </span>
         </Link>
       </div>
-      <ul className="grid grid-cols-3">
+      <ul className="grid grid-cols-3 w-full">
         {filteredData?.map((item: any, i: any) => {
           return (
             <li
               key={i}
-              className="mb-10 w-72 h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
+              className="mb-5 w-72 h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
             >
               <div>
                 <p>
