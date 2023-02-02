@@ -39,14 +39,14 @@ export default function App() {
   const router = useRouter();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      await trigger({ id: uuidv4(), ...data });
+      await trigger({ ...data });
     } catch (e) {}
   };
 
   if (user) {
     router.push("/admin/users");
   }
-  console.log(user);
+
   return (
     <form className="h-screen p-5" onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">

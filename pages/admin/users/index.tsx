@@ -73,7 +73,7 @@ export default function Page() {
               </div>
               <div>
                 <Link
-                  href="/admin/users/1"
+                  href={`/admin/users/${item.id}`}
                   className=" bg-yellow-600 rounded-full h-5 w-5 flex items-center justify-center hover:bg-yellow-500"
                 >
                   <MdArrowForward className="text-white" />
