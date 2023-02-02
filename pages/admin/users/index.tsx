@@ -37,7 +37,7 @@ export default function Page() {
           Our Users
         </p>
       </div>
-      <div className="flex justify-between mt-10 mb-10 ">
+      <div className="flex justify-between mt-10 mb-10">
         <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
           <MdOutlineSearch className="w-5 h-5 absolute ml-3" />
           <input
@@ -48,7 +48,7 @@ export default function Page() {
           />
         </div>
         <Link
-          className=" relative flex items-center text-black"
+          className=" relative flex items-start text-black"
           href="/admin/users/new"
           passHref
         >
@@ -58,12 +58,12 @@ export default function Page() {
           </span>
         </Link>
       </div>
-      <ul className="grid grid-cols-3 w-full">
+      <ul className="grid grid-cols-3 gap-4">
         {filteredData?.map((item: any, i: any) => {
           return (
             <li
               key={i}
-              className="mb-5 w-72 h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
+              className="mb-5 w-full h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
             >
               <div>
                 <p>
