@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
 const { v4: uuidv4 } = require("uuid");
+import { useRouter } from "next/router";
 
 import useSWRMutation from "swr/mutation";
 
@@ -28,11 +29,16 @@ async function createUser(url: string, data: Args) {
 }
 
 export default function App() {
-  const { trigger, isMutating } = useSWRMutation("/", createUser);
+  const { trigger, isMutating, error, data } = useSWRMutation("/", createUser);
   const { register, handleSubmit } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const router = useRouter();
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     trigger({ id: uuidv4(), ...data });
+    if (data) {
+      router.push("/admin/users");
+    }
   };
+
   return (
     <form className="h-screen p-5" onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
