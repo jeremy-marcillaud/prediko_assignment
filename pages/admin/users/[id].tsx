@@ -35,7 +35,7 @@ export default function Page() {
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      await trigger({ ...data });
+      await trigger({ id, ...data });
       router.push("/admin/users");
     } catch (e) {}
   };
