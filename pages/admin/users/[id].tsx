@@ -40,6 +40,20 @@ export default function Page() {
     } catch (e) {}
   };
 
+  const handleDelete = () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (res.status > 399 && res.status < 200) {
+        throw new Error();
+      }
+      return res.json();
+    });
+  };
+
   if (!user && !isError) {
     return (
       <div className=" h-screen flex justify-center items-center">
@@ -63,15 +77,22 @@ export default function Page() {
               User account
             </p>
           </div>
-          <div
-            className={classNames(
-              "rounded-xl h-12 flex items-center p-5",
-              disabled ? "bg-emerald-300" : "bg-emerald-500"
-            )}
-          >
-            <button type="submit" className="text-white" disabled={disabled}>
-              Update user
-            </button>
+          <div className="flex">
+            <div
+              className={classNames(
+                "rounded-xl h-12 flex items-center p-5 mr-2",
+                disabled ? "bg-emerald-300" : "bg-emerald-500"
+              )}
+            >
+              <button type="submit" className="text-white" disabled={disabled}>
+                Update user
+              </button>
+            </div>
+            <div className={"rounded-xl h-12 flex items-center p-5 bg-red-300"}>
+              <button onClick={handleDelete} className="text-white">
+                Delete user
+              </button>
+            </div>
           </div>
         </div>
       </div>
