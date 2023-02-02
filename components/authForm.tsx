@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 export default function AuthForm() {
   const router = useRouter();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: any) {
     e.preventDefault();
     router.push("/admin/users");
   }

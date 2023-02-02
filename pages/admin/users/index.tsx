@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { use, useState } from "react";
 import { MdArrowForward, MdOutlineSearch, MdAddBox } from "react-icons/md";
 import { useUsers } from "../../../lib/hooks";
 // const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
@@ -69,7 +69,9 @@ export default function Page() {
                 <p>
                   {item.first_name} {item.last_name}
                 </p>
-                <p className="text-gray-500 text-xs">Administrator</p>
+                <p className="text-gray-500 text-xs">
+                  {item.role === "ADMIN" ? "Administrator" : "Developper"}
+                </p>
               </div>
               <div>
                 <Link

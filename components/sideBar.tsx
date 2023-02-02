@@ -9,9 +9,9 @@ import {
 import MenuItem from "./menuItems";
 
 const navMenu = [
-  { icon: MdSupervisorAccount, path: "/admin/account", active: false },
-  { icon: MdOutlineAccountCircle, path: "/admin/users", active: true },
-  { icon: MdOutlineSettings, path: "/admin/settings", active: false },
+  { icon: MdSupervisorAccount, path: "/admin/account" },
+  { icon: MdOutlineAccountCircle, path: "/admin/users" },
+  { icon: MdOutlineSettings, path: "/admin/settings" },
 ];
 
 export default function SideBar() {

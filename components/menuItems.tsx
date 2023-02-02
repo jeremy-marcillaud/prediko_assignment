@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { IconType } from "react-icons";
 var classNames = require("classnames");
 
 type Data = {
   icon: IconType;
   path: string;
-  active: boolean;
 };
 
 type Props = {
@@ -13,17 +13,18 @@ type Props = {
 };
 
 export default function MenuItems(props: Props) {
+  const { asPath } = useRouter();
   return (
     <div>
       <ul>
         {props.data.map((element, i) => {
-          const { icon: Icon, path, active } = element;
+          const { icon: Icon, path } = element;
           return (
             <li key={i}>
               <Link
                 className={classNames(
                   "flex flex-row items-center  m-10 bg-gray-200 rounded-2xl h-16 w-16",
-                  active ? "bg-blue-600 text-white" : "bg-gray-200"
+                  path === asPath ? "bg-blue-600 text-white" : "bg-gray-200"
                 )}
                 href={path}
               >
