@@ -40,12 +40,9 @@ export default function App() {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       await trigger({ ...data });
+      router.push("/admin/users");
     } catch (e) {}
   };
-
-  if (user) {
-    router.push("/admin/users");
-  }
 
   return (
     <form className="h-screen p-5" onSubmit={handleSubmit(onSubmit)}>
