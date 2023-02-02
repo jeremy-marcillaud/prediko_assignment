@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
 import { useUser } from "../../../lib/hooks";
+import { IFormInput } from "./new";
 
 export default function Page() {
   const router = useRouter();
   const { id } = router.query;
   const { user, isLoading, isError } = useUser(id as string);
+  const { register, handleSubmit, setValue } = useForm<IFormInput>();
 
   if (!user && !isError) {
     return (
@@ -28,17 +32,60 @@ export default function Page() {
               <MdArrowBack className="text-white text-2xl" />
             </Link>
             <p className="text-2xl font-bold drop-shadow-md shadow-black">
-              {user.first_name} {user.last_name}
+              User account
             </p>
           </div>
-          <div className="bg-red-300 rounded-xl h-12 flex items-center p-5">
+          <div className="bg-emerald-300 rounded-xl h-12 flex items-center p-5">
             <button type="submit" className="text-white">
-              Delete user
+              Update user
             </button>
           </div>
         </div>
       </div>
-      <div className="mt-10 rounded-lg grid grid-cols-3 bg-white h-4/5 p-20"></div>
+      <div className="mt-10 rounded-lg grid grid-cols-3 bg-white h-4/5 p-20">
+        <div className="flex flex-col">
+          <label htmlFor="first_name">First Name</label>
+          <input
+            {...register("first_name", { required: true, maxLength: 20 })}
+            className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            onChange={(e) => setValue("first_name", e.target.value)}
+            defaultValue={user.first_name}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="last_name">Last Name</label>
+          <input
+            {...register("last_name", {
+              pattern: /^[A-Za-z]+$/i,
+              required: true,
+            })}
+            className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            onChange={(e) => setValue("last_name", e.target.value)}
+            defaultValue={user.last_name}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="email">Email</label>
+          <input
+            {...register("email", { required: true })}
+            type="email"
+            className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            onChange={(e) => setValue("email", e.target.value)}
+            defaultValue={user.email}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="role">Role</label>
+          <select
+            {...register("role")}
+            className="w-72 h-12 mr-10 mt-2 pl-2 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            defaultValue={user.role}
+          >
+            <option value="ADMIN">Admin</option>
+            <option value="DEV">Developper</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 }
