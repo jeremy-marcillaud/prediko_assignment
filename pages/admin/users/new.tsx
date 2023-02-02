@@ -25,7 +25,12 @@ async function createUser(url: string, data: Args) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data.arg),
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.status > 399 && res.status < 200) {
+      throw new Error();
+    }
+    return res.json();
+  });
 }
 
 export default function App() {
