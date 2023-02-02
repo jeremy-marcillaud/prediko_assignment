@@ -1,16 +1,44 @@
+import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
 import { useUser } from "../../../lib/hooks";
-import { IFormInput } from "./new";
+import { Args, IFormInput } from "./new";
+import useSWRMutation from "swr/mutation";
+import fetcher from "../../../lib/fetcher";
+
+async function updateUser(url: string, data: Args) {
+  await fetch(`https://test-front-p6cqni7znq-uc.a.run.app/${url}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data.arg),
+  }).then((res) => {
+    if (res.status > 399 && res.status < 200) {
+      throw new Error();
+    }
+    return res.json();
+  });
+}
 
 export default function Page() {
   const router = useRouter();
   const { id } = router.query;
   const { user, isLoading, isError } = useUser(id as string);
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
+  const [disabled, setDisabled] = useState(true);
+
+  const { trigger, isMutating, error } = useSWRMutation(`/${id}`, updateUser);
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    try {
+      await trigger({ ...data });
+      router.push("/admin/users");
+    } catch (e) {}
+  };
 
   if (!user && !isError) {
     return (
@@ -21,7 +49,7 @@ export default function Page() {
   }
 
   return (
-    <div className="p-5 h-screen">
+    <form onSubmit={handleSubmit(onSubmit)} className="p-5 h-screen">
       <div>
         <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
           <div className="flex items-center">
@@ -35,8 +63,13 @@ export default function Page() {
               User account
             </p>
           </div>
-          <div className="bg-emerald-300 rounded-xl h-12 flex items-center p-5">
-            <button type="submit" className="text-white">
+          <div
+            className={classNames(
+              "rounded-xl h-12 flex items-center p-5",
+              disabled ? "bg-emerald-300" : "bg-emerald-500"
+            )}
+          >
+            <button type="submit" className="text-white" disabled={disabled}>
               Update user
             </button>
           </div>
@@ -48,7 +81,10 @@ export default function Page() {
           <input
             {...register("first_name", { required: true, maxLength: 20 })}
             className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
-            onChange={(e) => setValue("first_name", e.target.value)}
+            onChange={(e) => {
+              setDisabled(false);
+              setValue("first_name", e.target.value);
+            }}
             defaultValue={user.first_name}
           />
         </div>
@@ -60,7 +96,10 @@ export default function Page() {
               required: true,
             })}
             className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
-            onChange={(e) => setValue("last_name", e.target.value)}
+            onChange={(e) => {
+              setDisabled(false);
+              setValue("last_name", e.target.value);
+            }}
             defaultValue={user.last_name}
           />
         </div>
@@ -70,7 +109,10 @@ export default function Page() {
             {...register("email", { required: true })}
             type="email"
             className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
-            onChange={(e) => setValue("email", e.target.value)}
+            onChange={(e) => {
+              setDisabled(false);
+              setValue("email", e.target.value);
+            }}
             defaultValue={user.email}
           />
         </div>
@@ -80,12 +122,16 @@ export default function Page() {
             {...register("role")}
             className="w-72 h-12 mr-10 mt-2 pl-2 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
             defaultValue={user.role}
+            onChange={(e) => {
+              setDisabled(false);
+              setValue("role", e.target.value);
+            }}
           >
             <option value="ADMIN">Admin</option>
             <option value="DEV">Developper</option>
           </select>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
