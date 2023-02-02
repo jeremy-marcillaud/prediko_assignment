@@ -4,8 +4,14 @@ import MenuLayout from "../components/menuLayout";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MenuLayout>
-      <Component {...pageProps} />
-    </MenuLayout>
+    <>
+      {Component.authPage ? (
+        <Component {...pageProps} />
+      ) : (
+        <MenuLayout>
+          <Component {...pageProps} />
+        </MenuLayout>
+      )}
+    </>
   );
 }
