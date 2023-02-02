@@ -25,20 +25,28 @@ async function createUser(url: string, data: Args) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data.arg),
-  });
+  }).then((res) => res.json());
 }
 
 export default function App() {
-  const { trigger, isMutating, error, data } = useSWRMutation("/", createUser);
+  const {
+    trigger,
+    isMutating,
+    error,
+    data: user,
+  } = useSWRMutation("/", createUser);
   const { register, handleSubmit } = useForm<IFormInput>();
   const router = useRouter();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    trigger({ id: uuidv4(), ...data });
-    if (data) {
-      router.push("/admin/users");
-    }
+    try {
+      await trigger({ id: uuidv4(), ...data });
+    } catch (e) {}
   };
 
+  if (user) {
+    router.push("/admin/users");
+  }
+  console.log(user);
   return (
     <form className="h-screen p-5" onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
