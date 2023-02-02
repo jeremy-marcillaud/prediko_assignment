@@ -5,6 +5,10 @@ const { v4: uuidv4 } = require("uuid");
 import { useRouter } from "next/router";
 
 import useSWRMutation from "swr/mutation";
+import { createUser } from "../../../lib/users";
+import Spinner from "../../../atoms/spinner";
+import Button from "../../../atoms/button";
+import CircleButton from "../../../atoms/circleButton";
 
 export interface IFormInput {
   id: string;
@@ -18,28 +22,8 @@ export interface Args {
   arg: IFormInput;
 }
 
-async function createUser(url: string, data: Args) {
-  await fetch("https://test-front-p6cqni7znq-uc.a.run.app", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data.arg),
-  }).then((res) => {
-    if (res.status > 399 && res.status < 200) {
-      throw new Error();
-    }
-    return res.json();
-  });
-}
-
 export default function App() {
-  const {
-    trigger,
-    isMutating,
-    error,
-    data: user,
-  } = useSWRMutation("/", createUser);
+  const { trigger, isMutating, data: user } = useSWRMutation("/", createUser);
   const { register, handleSubmit } = useForm<IFormInput>();
   const router = useRouter();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -49,25 +33,22 @@ export default function App() {
     } catch (e) {}
   };
 
+  if (isMutating) {
+    return <Spinner />;
+  }
+
   return (
     <form className="h-screen p-5" onSubmit={handleSubmit(onSubmit)}>
       <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
         <div className="flex items-center">
-          <Link
-            href="/admin/users"
-            className="bg-yellow-600 rounded-full h-12 w-12 mr-10 flex items-center justify-center hover:bg-yellow-500"
-          >
+          <CircleButton path="/admin/users">
             <MdArrowBack className="text-white text-2xl" />
-          </Link>
+          </CircleButton>
           <p className="text-2xl font-bold drop-shadow-md shadow-black">
             Add new user
           </p>
         </div>
-        <div className="bg-emerald-300 rounded-xl h-12 flex items-center p-5">
-          <button type="submit" className="text-white" disabled={isMutating}>
-            save and add
-          </button>
-        </div>
+        <Button type="submit">Save and add</Button>
       </div>
       <div className="mt-10 rounded-lg grid grid-cols-3 bg-white h-4/5 p-20">
         <div className="flex flex-col">

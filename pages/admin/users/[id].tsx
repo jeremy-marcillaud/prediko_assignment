@@ -5,61 +5,33 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
 import { useUser } from "../../../lib/hooks";
-import { Args, IFormInput } from "./new";
+import { IFormInput } from "./new";
 import useSWRMutation from "swr/mutation";
-import fetcher from "../../../lib/fetcher";
-
-async function updateUser(url: string, data: Args) {
-  await fetch(`https://test-front-p6cqni7znq-uc.a.run.app/${url}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data.arg),
-  }).then((res) => {
-    if (res.status > 399 && res.status < 200) {
-      throw new Error();
-    }
-    return res.json();
-  });
-}
+import { deleteUser, updateUser } from "../../../lib/users";
+import Spinner from "../../../atoms/spinner";
+import Button from "../../../atoms/button";
+import CircleButton from "../../../atoms/circleButton";
 
 export default function Page() {
   const router = useRouter();
   const { id } = router.query;
-  const { user, isLoading, isError } = useUser(id as string);
+  const { user, isError } = useUser(id as string);
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
   const [disabled, setDisabled] = useState(true);
 
   const { trigger, isMutating, error } = useSWRMutation(`/${id}`, updateUser);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    try {
-      await trigger({ id, ...data });
-      router.push("/admin/users");
-    } catch (e) {}
+    await trigger({ id, ...data });
+    router.push("/admin/users");
   };
 
   const handleDelete = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.status > 399 && res.status < 200) {
-        throw new Error();
-      }
-      return res.json();
-    });
+    deleteUser(`/${id}` as string);
   };
 
-  if (!user && !isError) {
-    return (
-      <div className=" h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-      </div>
-    );
+  if ((!user && !isError) || isMutating) {
+    return <Spinner />;
   }
 
   return (
@@ -67,31 +39,27 @@ export default function Page() {
       <div>
         <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
           <div className="flex items-center">
-            <Link
-              href="/admin/users"
-              className="bg-yellow-600 rounded-full h-12 w-12 mr-10 flex items-center justify-center hover:bg-yellow-500"
-            >
+            <CircleButton path="/admin/users">
               <MdArrowBack className="text-white text-2xl" />
-            </Link>
+            </CircleButton>
             <p className="text-2xl font-bold drop-shadow-md shadow-black">
               User account
             </p>
           </div>
           <div className="flex">
-            <div
-              className={classNames(
-                "rounded-xl h-12 flex items-center p-5 mr-2",
-                disabled ? "bg-emerald-300" : "bg-emerald-500"
-              )}
-            >
-              <button type="submit" className="text-white" disabled={disabled}>
+            <div className="mr-2">
+              <Button type="submit" disabled={disabled}>
                 Update user
-              </button>
+              </Button>
             </div>
-            <div className={"rounded-xl h-12 flex items-center p-5 bg-red-300"}>
-              <button onClick={handleDelete} className="text-white">
+            <div>
+              <Button
+                variant="danger"
+                disabled={disabled}
+                onClick={handleDelete}
+              >
                 Delete user
-              </button>
+              </Button>
             </div>
           </div>
         </div>

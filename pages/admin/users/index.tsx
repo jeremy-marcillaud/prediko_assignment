@@ -1,19 +1,17 @@
 import Link from "next/link";
-import { use, useState } from "react";
+import { useState } from "react";
 import { MdArrowForward, MdOutlineSearch, MdAddBox } from "react-icons/md";
+import CircleButton from "../../../atoms/circleButton";
+import Spinner from "../../../atoms/spinner";
 import { useUsers } from "../../../lib/hooks";
 // const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 export default function Page() {
-  const { users, isLoading, isError } = useUsers();
+  const { users, isError } = useUsers();
   const [searchTerm, setSearchTerm] = useState("");
 
   if (!users && !isError) {
-    return (
-      <div className=" h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-      </div>
-    );
+    return <Spinner />;
   }
 
   const handleSearch = (e: any) => {
@@ -73,14 +71,9 @@ export default function Page() {
                   {item.role === "ADMIN" ? "Administrator" : "Developper"}
                 </p>
               </div>
-              <div>
-                <Link
-                  href={`/admin/users/${item.id}`}
-                  className=" bg-yellow-600 rounded-full h-5 w-5 flex items-center justify-center hover:bg-yellow-500"
-                >
-                  <MdArrowForward className="text-white" />
-                </Link>
-              </div>
+              <CircleButton path={`/admin/users/${item.id}`}>
+                <MdArrowForward className="text-white" />
+              </CircleButton>
             </li>
           );
         })}
