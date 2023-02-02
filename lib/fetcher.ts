@@ -12,3 +12,29 @@ export default function fetcher(url: string, data = undefined) {
     return response.json();
   });
 }
+
+// async function updateUser(url: string, data: Args) {
+//     await fetch("https://test-front-p6cqni7znq-uc.a.run.app", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(data.arg),
+//     });
+//   }
+
+// const fetcher = async (url, method = "GET", data = {}) => {
+//   const options = {
+//     method: method,
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   };
+
+//   if (method === "POST") {
+//     options.body = JSON.stringify(data);
+//   }
+
+//   const response = await fetch(url, options);
+//   return response.json();
+// };

@@ -16,30 +16,6 @@ export default function Page() {
     setSearchTerm(e.target.value);
   };
 
-  let user = users.map((el: any, i: any) => {
-    return (
-      <div
-        key={i}
-        className="mb-10 w-72 h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
-      >
-        <div>
-          <p>
-            {el.first_name} {el.last_name}
-          </p>
-          <p className="text-gray-500 text-xs">Administrator</p>
-        </div>
-        <div>
-          <Link
-            href="/admin/users/1"
-            className=" bg-yellow-600 rounded-full h-5 w-5 flex items-center justify-center hover:bg-yellow-500"
-          >
-            <MdArrowForward className="text-white" />
-          </Link>
-        </div>
-      </div>
-    );
-  });
-
   let filteredData = users;
   if (users && searchTerm) {
     filteredData = users.filter((user: any) => {
@@ -48,7 +24,6 @@ export default function Page() {
         user.last_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
-    console.log(user);
   }
 
   return (
@@ -79,10 +54,10 @@ export default function Page() {
           </span>
         </Link>
       </div>
-      <div className="flex flex-wrap w-full justify-between">
-        {filteredData.map((item, i) => {
+      <ul className="grid grid-cols-3">
+        {filteredData?.map((item: any, i: any) => {
           return (
-            <div
+            <li
               key={i}
               className="mb-10 w-72 h-20 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
             >
@@ -100,10 +75,10 @@ export default function Page() {
                   <MdArrowForward className="text-white" />
                 </Link>
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </div>
   );
 }

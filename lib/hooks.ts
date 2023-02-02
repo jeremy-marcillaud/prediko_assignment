@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 import fetcher from "./fetcher";
 
 export function useUsers() {
