@@ -53,11 +53,7 @@ export default function Page() {
               </Button>
             </div>
             <div>
-              <Button
-                variant="danger"
-                disabled={disabled}
-                onClick={handleDelete}
-              >
+              <Button variant="danger" onClick={handleDelete}>
                 Delete user
               </Button>
             </div>
