@@ -33,7 +33,6 @@ export default function Page(): ReactElement {
   };
 
   const onClick = async () => {
-    await test().then((resp) => console.log(resp));
     try {
       await deleteUser(`/${userId}` as string);
       router.push("/admin/users");
