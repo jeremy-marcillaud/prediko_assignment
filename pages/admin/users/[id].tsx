@@ -54,7 +54,11 @@ export default function Page() {
             <div className="mr-2">
               <button
                 type="submit"
-                className="bg-emerald-300 text-white h-fit rounded-lg font-medium transition-all w-32 p-3 py-2 text-sm"
+                className={classNames(
+                  `text-white h-fit rounded-lg font-medium transition-all w-32 p-3 py-2 text-sm`,
+                  disabled ? "bg-emerald-300" : "bg-emerald-500"
+                )}
+                disabled={disabled}
               >
                 Update user
               </button>
