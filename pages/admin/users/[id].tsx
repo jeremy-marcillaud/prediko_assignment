@@ -19,8 +19,6 @@ export default function Page(): ReactElement {
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
   const [disabled, setDisabled] = useState(true);
   let [isOpen, setIsOpen] = useState(false);
-  const success = () => toast.success("Success");
-  const error = () => toast.error("Something went wrong");
 
   const { trigger, isMutating } = useSWRMutation<IFormInput>(
     `/${userId}`,
@@ -29,22 +27,16 @@ export default function Page(): ReactElement {
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      await trigger({ userId, ...data });
-      success();
+      await trigger({ id: userId, ...data });
       router.push("/admin/users");
-    } catch {
-      error();
-    }
+    } catch {}
   };
 
   const onClick = async () => {
     try {
       await deleteUser(`/${userId}` as string);
-      success();
       router.push("/admin/users");
-    } catch (e) {
-      error();
-    }
+    } catch (e) {}
   };
 
   if ((!user && !isError) || isMutating) {

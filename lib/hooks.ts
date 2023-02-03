@@ -1,9 +1,11 @@
 import useSWR from "swr";
 import fetcher from "./fetcher";
-import useSWRMutation from "swr/mutation";
-import { createUser } from "./users";
 
 export function useUsers() {
+  // const create = useResponse(createUser, {
+
+  // })
+
   const { data, error } = useSWR("/", fetcher);
   return {
     users: data,
@@ -21,3 +23,16 @@ export function useUser(id: string) {
     isError: error,
   };
 }
+
+// const create = useResponse(createVenue, {
+//   200: function successCallback(venue) {
+//     const { id, name } = venue;
+//     return {
+//       message: t("feedback.venue.created", { name }),
+//       redirect: {
+//         path: ["admin", "venues", id, "hours"],
+//         query: { new: "on" },
+//       },
+//     };
+//   },
+// });
