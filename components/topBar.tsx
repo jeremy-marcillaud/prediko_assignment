@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Props } from "../atoms/button";
+import { Props } from "./atoms/button";
 
 export default function TopBar({ children }: Props) {
   return (

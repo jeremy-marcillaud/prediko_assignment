@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 
 import useSWRMutation from "swr/mutation";
 import { createUser } from "../../../lib/users";
-import Spinner from "../../../atoms/spinner";
-import Button from "../../../atoms/button";
-import CircleButton from "../../../atoms/circleButton";
+import Spinner from "../../../components/atoms/spinner";
+import Button from "../../../components/atoms/button";
+import CircleButton from "../../../components/atoms/circleButton";
 
 export interface IFormInput {
   id: string;

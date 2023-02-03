@@ -1,5 +1,5 @@
 import { MdArrowForward } from "react-icons/md";
-import CircleButton from "../atoms/circleButton";
+import CircleButton from "./atoms/circleButton";
 
 export default function userCard() {
   return (

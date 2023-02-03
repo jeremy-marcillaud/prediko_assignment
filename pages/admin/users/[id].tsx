@@ -8,9 +8,9 @@ import { useUser } from "../../../lib/hooks";
 import { IFormInput } from "./new";
 import useSWRMutation from "swr/mutation";
 import { deleteUser, updateUser } from "../../../lib/users";
-import Spinner from "../../../atoms/spinner";
-import Button from "../../../atoms/button";
-import CircleButton from "../../../atoms/circleButton";
+import Spinner from "../../../components/atoms/spinner";
+import Button from "../../../components/atoms/button";
+import CircleButton from "../../../components/atoms/circleButton";
 
 export default function Page() {
   const router = useRouter();
@@ -26,7 +26,7 @@ export default function Page() {
     router.push("/admin/users");
   };
 
-  const handleDelete = () => {
+  const onClick = () => {
     deleteUser(`/${id}` as string);
   };
 
@@ -52,24 +52,12 @@ export default function Page() {
           </div>
           <div className="flex">
             <div className="mr-2">
-              <button
-                type="submit"
-                className={classNames(
-                  `text-white h-fit rounded-lg font-medium transition-all w-32 p-3 py-2 text-sm`,
-                  disabled ? "bg-emerald-300" : "bg-emerald-500"
-                )}
-                disabled={disabled}
-              >
+              <Button type={"submit"} disabled={disabled}>
                 Update user
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={handleDelete}
-                className="bg-red-300 text-white h-fit  rounded-lg font-medium transition-all w-32 p-3 py-2 text-sm"
-              >
+              </Button>
+              <Button variant="danger" onClick={onClick}>
                 Delete user
-              </button>
+              </Button>
             </div>
           </div>
         </div>
