@@ -45,7 +45,7 @@ export default function Page(): ReactElement {
 
   return (
     <>
-      <MyDialog isOpen={isOpen} setIsOpen={setIsOpen} onClick={onClick} />;
+      <MyDialog isOpen={isOpen} setIsOpen={setIsOpen} onClick={onClick} />
       <form onSubmit={handleSubmit(onSubmit)} className="p-5 h-screen">
         <div>
           <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
