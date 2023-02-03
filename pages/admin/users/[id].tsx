@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
 import { useUser } from "../../../lib/hooks";
@@ -11,7 +11,7 @@ import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
 import MyDialog from "../../../components/modal";
 
-export default function Page() {
+export default function Page(): ReactElement {
   const router = useRouter();
   const { id } = router.query;
   const { user, isError } = useUser(id as string);
@@ -19,7 +19,10 @@ export default function Page() {
   const [disabled, setDisabled] = useState(true);
   let [isOpen, setIsOpen] = useState(false);
 
-  const { trigger, isMutating, error } = useSWRMutation(`/${id}`, updateUser);
+  const { trigger, isMutating } = useSWRMutation<IFormInput>(
+    `/${id}`,
+    updateUser
+  );
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     await trigger({ id, ...data });

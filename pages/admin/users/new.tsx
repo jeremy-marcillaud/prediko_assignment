@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
-const { v4: uuidv4 } = require("uuid");
 import { useRouter } from "next/router";
 
 import useSWRMutation from "swr/mutation";
@@ -9,6 +7,7 @@ import { createUser } from "../../../lib/users";
 import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
+import { ReactElement } from "react";
 
 export interface IFormInput {
   id: string;
@@ -22,8 +21,8 @@ export interface Args {
   arg: IFormInput;
 }
 
-export default function App() {
-  const { trigger, isMutating } = useSWRMutation("/", createUser);
+export default function Page(): ReactElement {
+  const { trigger, isMutating } = useSWRMutation<IFormInput>("/", createUser);
   const { register, handleSubmit } = useForm<IFormInput>();
   const router = useRouter();
 
