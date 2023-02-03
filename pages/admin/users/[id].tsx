@@ -52,14 +52,20 @@ export default function Page() {
           </div>
           <div className="flex">
             <div className="mr-2">
-              <Button type="submit" disabled={disabled}>
+              <button
+                type="submit"
+                className="bg-emerald-300 text-white h-fit rounded-lg font-medium transition-all w-32 p-3 py-2 text-sm"
+              >
                 Update user
-              </Button>
+              </button>
             </div>
             <div>
-              <Button variant="danger" onClick={handleDelete}>
+              <button
+                onClick={handleDelete}
+                className="bg-red-300 text-white h-fit  rounded-lg font-medium transition-all w-32 p-3 py-2 text-sm"
+              >
                 Delete user
-              </Button>
+              </button>
             </div>
           </div>
         </div>
