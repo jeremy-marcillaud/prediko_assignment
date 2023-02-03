@@ -1,5 +1,3 @@
-import classNames from "classnames";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -11,6 +9,7 @@ import { deleteUser, updateUser } from "../../../lib/users";
 import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
+import MyDialog from "../../../components/modal";
 
 export default function Page() {
   const router = useRouter();
@@ -18,6 +17,7 @@ export default function Page() {
   const { user, isError } = useUser(id as string);
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
   const [disabled, setDisabled] = useState(true);
+  let [isOpen, setIsOpen] = useState(false);
 
   const { trigger, isMutating, error } = useSWRMutation(`/${id}`, updateUser);
 
@@ -27,7 +27,8 @@ export default function Page() {
   };
 
   const onClick = () => {
-    deleteUser(`/${id}` as string);
+    // deleteUser(`/${id}` as string);
+    // return <MyDialog isOpen={isOpen} />;
   };
 
   if ((!user && !isError) || isMutating) {
@@ -51,7 +52,7 @@ export default function Page() {
               <Button type={"submit"} disabled={disabled}>
                 Update user
               </Button>
-              <Button variant="danger" onClick={onClick}>
+              <Button type={"button"} variant="danger" onClick={onClick}>
                 Delete user
               </Button>
             </div>
