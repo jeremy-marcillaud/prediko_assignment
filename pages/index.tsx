@@ -1,11 +1,6 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import { MdAddBox, MdArrowForward } from "react-icons/md";
-
-const inter = Inter({ subsets: ["latin"] });
+import { MdArrowForward } from "react-icons/md";
+import CircleButton from "../atoms/circleButton";
 
 export default function Home() {
   return (
@@ -17,11 +12,9 @@ export default function Home() {
         <div>
           <p>Dashboard</p>
         </div>
-        <div className=" bg-yellow-600 rounded-full h-5 w-5 flex items-center justify-center hover:bg-yellow-500">
-          <div>
-            <MdArrowForward className="text-white" />
-          </div>
-        </div>
+        <CircleButton path="/admin/users">
+          <MdArrowForward className="text-white" />
+        </CircleButton>
       </Link>
     </div>
   );
