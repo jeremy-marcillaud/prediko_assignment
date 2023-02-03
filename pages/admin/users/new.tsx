@@ -23,14 +23,17 @@ export interface Args {
 }
 
 export default function App() {
-  const { trigger, isMutating, data: user } = useSWRMutation("/", createUser);
+  const { trigger, isMutating } = useSWRMutation("/", createUser);
   const { register, handleSubmit } = useForm<IFormInput>();
   const router = useRouter();
+
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       await trigger({ ...data });
       router.push("/admin/users");
-    } catch (e) {}
+    } catch (e) {
+      alert("Something went wrong");
+    }
   };
 
   if (isMutating) {

@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import fetcher from "./fetcher";
+import useSWRMutation from "swr/mutation";
 
 export function useUsers() {
   const { data, error } = useSWR("/", fetcher);

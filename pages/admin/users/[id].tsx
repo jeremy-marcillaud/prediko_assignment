@@ -27,8 +27,12 @@ export default function Page() {
   };
 
   const onClick = async () => {
-    await deleteUser(`/${id}` as string);
-    router.push("/admin/users");
+    try {
+      await deleteUser(`/${id}` as string);
+      router.push("/admin/users");
+    } catch (e) {
+      alert("Something went wrong");
+    }
   };
 
   if ((!user && !isError) || isMutating) {
