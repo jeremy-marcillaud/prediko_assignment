@@ -27,17 +27,14 @@ export default function Page(): ReactElement {
   const { trigger, isMutating } = useSWRMutation<IFormInput>("/", createUser);
   const { register, handleSubmit } = useForm<IFormInput>();
   const router = useRouter();
-  const success = () => toast.success("Success");
-  const error = () => toast.error("Something went wrong");
+  //   const success = () => toast.success("Success");
+  //   const error = () => toast.error("Something went wrong");
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       await trigger({ ...data });
-      success();
       router.push("/admin/users");
-    } catch (e) {
-      error();
-    }
+    } catch (e) {}
   };
 
   if (isMutating) {

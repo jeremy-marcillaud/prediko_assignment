@@ -1,11 +1,9 @@
 import useSWR from "swr";
+import { useResponse } from "../hooks/use-response-wrapper";
 import fetcher from "./fetcher";
+import { createUser } from "./users";
 
 export function useUsers() {
-  // const create = useResponse(createUser, {
-
-  // })
-
   const { data, error } = useSWR("/", fetcher);
   return {
     users: data,
@@ -22,6 +20,12 @@ export function useUser(id: string) {
     isLoading: !data && !error,
     isError: error,
   };
+}
+
+export function useTest() {
+  const create = useResponse(createUser, {});
+
+  return create;
 }
 
 // const create = useResponse(createVenue, {

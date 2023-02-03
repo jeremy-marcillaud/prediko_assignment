@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
-import { useUser } from "../../../lib/hooks";
+import { useTest, useUser } from "../../../lib/hooks";
 import { IFormInput } from "./new";
 import useSWRMutation from "swr/mutation";
 import { deleteUser, updateUser } from "../../../lib/users";
@@ -10,7 +10,6 @@ import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
 import MyDialog from "../../../components/modal";
-import { toast } from "react-toastify";
 
 export default function Page(): ReactElement {
   const router = useRouter();
@@ -18,6 +17,7 @@ export default function Page(): ReactElement {
   const { user, isError } = useUser(userId as string);
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
   const [disabled, setDisabled] = useState(true);
+
   let [isOpen, setIsOpen] = useState(false);
 
   const { trigger, isMutating } = useSWRMutation<IFormInput>(
@@ -33,6 +33,7 @@ export default function Page(): ReactElement {
   };
 
   const onClick = async () => {
+    await test().then((resp) => console.log(resp));
     try {
       await deleteUser(`/${userId}` as string);
       router.push("/admin/users");
