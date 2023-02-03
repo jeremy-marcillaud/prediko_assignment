@@ -10,31 +10,40 @@ import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
 import MyDialog from "../../../components/modal";
+import { toast } from "react-toastify";
 
 export default function Page(): ReactElement {
   const router = useRouter();
-  const { id } = router.query;
-  const { user, isError } = useUser(id as string);
+  const { id: userId } = router.query;
+  const { user, isError } = useUser(userId as string);
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
   const [disabled, setDisabled] = useState(true);
   let [isOpen, setIsOpen] = useState(false);
+  const success = () => toast.success("Success");
+  const error = () => toast.error("Something went wrong");
 
   const { trigger, isMutating } = useSWRMutation<IFormInput>(
-    `/${id}`,
+    `/${userId}`,
     updateUser
   );
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    await trigger({ id, ...data });
-    router.push("/admin/users");
+    try {
+      await trigger({ userId, ...data });
+      success();
+      router.push("/admin/users");
+    } catch {
+      error();
+    }
   };
 
   const onClick = async () => {
     try {
-      await deleteUser(`/${id}` as string);
+      await deleteUser(`/${userId}` as string);
+      success();
       router.push("/admin/users");
     } catch (e) {
-      alert("Something went wrong");
+      error();
     }
   };
 

@@ -8,6 +8,8 @@ import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
 import { ReactElement } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface IFormInput {
   id: string;
@@ -25,13 +27,16 @@ export default function Page(): ReactElement {
   const { trigger, isMutating } = useSWRMutation<IFormInput>("/", createUser);
   const { register, handleSubmit } = useForm<IFormInput>();
   const router = useRouter();
+  const success = () => toast.success("Success");
+  const error = () => toast.error("Something went wrong");
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       await trigger({ ...data });
+      success();
       router.push("/admin/users");
     } catch (e) {
-      alert("Something went wrong");
+      error();
     }
   };
 
