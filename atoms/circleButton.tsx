@@ -21,9 +21,9 @@ export default function CircleButton({
   return (
     <Link
       className={classNames(
-        "h-fit w-fit rounded-full m-2 text-xs font-medium transition-all",
+        "h-fit w-fit rounded-full mr-2 text-xs font-medium transition-all",
         size === "large" && "px-5 py-3 text-base",
-        size === "regular" && "w-10 p-2 py-2 text-sm",
+        size === "regular" && "p-2",
         size === "small" && "p-2",
         variant === "regular" && "bg-yellow-600  text-white"
       )}
