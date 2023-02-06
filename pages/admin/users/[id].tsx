@@ -43,6 +43,7 @@ export default function Page(): ReactElement {
     try {
       await trigger({ id: userId, ...data });
       successUpdated();
+      setDisabled(true);
     } catch {
       errorMutate();
     }

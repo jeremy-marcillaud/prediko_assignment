@@ -6,7 +6,6 @@ export function getUser(url: string) {
 }
 
 export function getUsers(url: string) {
-  console.log(url);
   return fetcher(url, { method: "GET" });
 }
 
