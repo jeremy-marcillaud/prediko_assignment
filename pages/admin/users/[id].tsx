@@ -41,7 +41,7 @@ export default function Page(): ReactElement {
   // event handler
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      await trigger({ id: userId, ...data });
+      await trigger({ ...data, id: userId });
       successUpdated();
       setDisabled(true);
     } catch {
