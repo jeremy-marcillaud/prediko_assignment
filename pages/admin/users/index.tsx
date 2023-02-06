@@ -8,17 +8,17 @@ import { getUsers } from "../../../lib/users";
 // const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 export default function Page(): ReactElement {
-  const { data: users, error: isError } = useSWR("/", getUsers);
   const [searchTerm, setSearchTerm] = useState("");
 
-  if (!users && !isError) {
-    return <Spinner />;
-  }
+  //swr
+  const { data: users, error: isError } = useSWR("/", getUsers);
 
+  // handler
   const handleSearch = (e: any) => {
     setSearchTerm(e.target.value);
   };
 
+  //search
   let filteredData = users;
   if (users && searchTerm) {
     filteredData = users.filter((user: any) => {
@@ -27,6 +27,10 @@ export default function Page(): ReactElement {
         user.last_name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     });
+  }
+
+  if (!users && !isError) {
+    return <Spinner />;
   }
 
   return (

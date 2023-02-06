@@ -24,17 +24,27 @@ export interface Args {
 }
 
 export default function Page(): ReactElement {
-  const { trigger, isMutating } = useSWRMutation<IFormInput>("/", createUser);
-  const { register, handleSubmit } = useForm<IFormInput>();
   const router = useRouter();
-  //   const success = () => toast.success("Success");
-  //   const error = () => toast.error("Something went wrong");
 
+  //swr
+  const { trigger, isMutating } = useSWRMutation<IFormInput>("/", createUser);
+
+  //form
+  const { register, handleSubmit } = useForm<IFormInput>();
+
+  //toastify
+  const success = () => toast.success("User successfully created");
+  const error = () => toast.error("Something went wrong");
+
+  //handler
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       await trigger({ ...data });
+      success();
       router.push("/admin/users");
-    } catch (e) {}
+    } catch (e) {
+      error();
+    }
   };
 
   if (isMutating) {

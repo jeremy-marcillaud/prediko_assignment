@@ -17,23 +17,28 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Page(): ReactElement {
   const router = useRouter();
   const { id: userId } = router.query;
+
+  //swr
   const { data: user, error: isError } = useSWR(
     `/${userId}` as string,
     getUser
   );
-  const { register, handleSubmit, setValue } = useForm<IFormInput>();
-  const [disabled, setDisabled] = useState(true);
-  const successUpdated = () => toast.success("User updated");
-  const successDeleted = () => toast.success("User successfully deleted");
-  const errorMutate = () => toast.error("Something went wrong");
-
-  let [isOpen, setIsOpen] = useState(false);
-
-  const { trigger, isMutating, error } = useSWRMutation<IFormInput>(
+  const { trigger, isMutating } = useSWRMutation<IFormInput>(
     `/${userId}`,
     updateUser
   );
 
+  // toastify
+  const successUpdated = () => toast.success("User updated");
+  const successDeleted = () => toast.success("User successfully deleted");
+  const errorMutate = () => toast.error("Something went wrong");
+
+  // form
+  const { register, handleSubmit, setValue } = useForm<IFormInput>();
+  const [disabled, setDisabled] = useState(true);
+  let [isOpen, setIsOpen] = useState(false);
+
+  // event handler
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       await trigger({ id: userId, ...data });
