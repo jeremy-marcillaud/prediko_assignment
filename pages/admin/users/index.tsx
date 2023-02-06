@@ -3,11 +3,12 @@ import { ReactElement, useState } from "react";
 import { MdArrowForward, MdOutlineSearch, MdAddBox } from "react-icons/md";
 import CircleButton from "../../../components/atoms/circleButton";
 import Spinner from "../../../components/atoms/spinner";
-import { useUsers } from "../../../lib/hooks";
+import useSWR from "swr";
+import { getUsers } from "../../../lib/users";
 // const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 export default function Page(): ReactElement {
-  const { users, isError } = useUsers();
+  const { data: users, error: isError } = useSWR("/", getUsers);
   const [searchTerm, setSearchTerm] = useState("");
 
   if (!users && !isError) {

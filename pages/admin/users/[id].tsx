@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { MdArrowBack } from "react-icons/md";
-import { useTest, useUser } from "../../../lib/hooks";
 import { IFormInput } from "./new";
 import useSWRMutation from "swr/mutation";
 import { deleteUser, updateUser } from "../../../lib/users";
@@ -10,17 +9,27 @@ import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
 import MyDialog from "../../../components/modal";
+import useSWR from "swr";
+import { getUser } from "../../../lib/users";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Page(): ReactElement {
   const router = useRouter();
   const { id: userId } = router.query;
-  const { user, isError } = useUser(userId as string);
+  const { data: user, error: isError } = useSWR(
+    `/${userId}` as string,
+    getUser
+  );
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
   const [disabled, setDisabled] = useState(true);
+  const successUpdated = () => toast.success("User updated");
+  const successDeleted = () => toast.success("User successfully deleted");
+  const errorMutate = () => toast.error("Something went wrong");
 
   let [isOpen, setIsOpen] = useState(false);
 
-  const { trigger, isMutating } = useSWRMutation<IFormInput>(
+  const { trigger, isMutating, error } = useSWRMutation<IFormInput>(
     `/${userId}`,
     updateUser
   );
@@ -28,15 +37,20 @@ export default function Page(): ReactElement {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
       await trigger({ id: userId, ...data });
-      router.push("/admin/users");
-    } catch {}
+      successUpdated();
+    } catch {
+      errorMutate();
+    }
   };
 
   const onClick = async () => {
     try {
       await deleteUser(`/${userId}` as string);
+      successDeleted();
       router.push("/admin/users");
-    } catch (e) {}
+    } catch (e) {
+      errorMutate();
+    }
   };
 
   if ((!user && !isError) || isMutating) {
