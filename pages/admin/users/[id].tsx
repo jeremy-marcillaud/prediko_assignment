@@ -47,6 +47,7 @@ export default function Page(): ReactElement {
       await trigger({ ...data, id: userId });
       successUpdated();
       setDisabled(true);
+      router.push("/admin/users");
     } catch {
       errorMutate();
     }
@@ -109,7 +110,7 @@ export default function Page(): ReactElement {
             <label htmlFor="first_name">First Name</label>
             <input
               {...register("first_name", { required: true, maxLength: 20 })}
-              className="w-96 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               onChange={(e) => {
                 setDisabled(false);
                 setValue("first_name", e.target.value);
@@ -124,7 +125,7 @@ export default function Page(): ReactElement {
                 pattern: /^[A-Za-z]+$/i,
                 required: true,
               })}
-              className="w-96 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               onChange={(e) => {
                 setDisabled(false);
                 setValue("last_name", e.target.value);
@@ -137,7 +138,7 @@ export default function Page(): ReactElement {
             <input
               {...register("email", { required: true })}
               type="email"
-              className="w-96 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               onChange={(e) => {
                 setDisabled(false);
                 setValue("email", e.target.value);
@@ -149,7 +150,7 @@ export default function Page(): ReactElement {
             <label htmlFor="role">Role</label>
             <select
               {...register("role")}
-              className="w-96 h-12 mt-2 pl-2 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-64 h-12 mt-2 pl-2 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               defaultValue={user.role}
               onChange={(e) => {
                 setDisabled(false);
@@ -159,7 +160,7 @@ export default function Page(): ReactElement {
               <option value="ADMIN">Admin</option>
               <option value="DEV">Developper</option>
             </select>
-            <div className="w-96">
+            <div className="w-64">
               <div className="flex justify-between md:hidden">
                 <Button type={"submit"} disabled={disabled}>
                   Update user
