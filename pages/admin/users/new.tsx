@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdMenu } from "react-icons/md";
 import { useRouter } from "next/router";
 
 import useSWRMutation from "swr/mutation";
@@ -7,9 +7,11 @@ import { createUser } from "../../../lib/users";
 import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
 import CircleButton from "../../../components/atoms/circleButton";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Drawer from "../../../components/molecules/drawer";
+import SideBar from "../../../components/sideBar";
 
 export interface IFormInput {
   id: string;
@@ -25,6 +27,7 @@ export interface Args {
 
 export default function Page(): ReactElement {
   const router = useRouter();
+  let [open, setOpen] = useState<boolean>(false);
 
   //swr
   const { trigger, isMutating } = useSWRMutation<IFormInput>("/", createUser);
@@ -65,6 +68,16 @@ export default function Page(): ReactElement {
         <div className="hidden md:flex">
           <Button type="submit">Save and add</Button>
         </div>
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="mb-1 flex justify-end items-end text-gray-400 focus-within:text-gray-600 sm:hidden"
+        >
+          <Drawer isOpen={open} setIsOpen={setOpen}>
+            <SideBar hidden={!open} />
+          </Drawer>
+          <MdMenu className="w-8 h-8" />
+        </button>
       </div>
       <div className="mt-10 p-10 rounded-lg grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-white h-screen lg:h-4/5 sm:p-20">
         <div className="flex flex-col">

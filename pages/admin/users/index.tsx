@@ -10,7 +10,7 @@ import CircleButton from "../../../components/atoms/circleButton";
 import Spinner from "../../../components/atoms/spinner";
 import useSWR from "swr";
 import { getUsers } from "../../../lib/users";
-import Drawer from "../../../components/atoms/drawer";
+import Drawer from "../../../components/molecules/drawer";
 import SideBar from "../../../components/sideBar";
 // const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
@@ -42,7 +42,7 @@ export default function Page(): ReactElement {
   }
 
   return (
-    <div className="mr-0 p-16">
+    <div className=" w-screen md:max-w-screen-lg xl:max-w-screen-2xl p-16">
       <div className="w-96 md:w-full flex justify-between">
         <div>
           <p className="text-2xl font-bold drop-shadow-md shadow-black">
@@ -50,6 +50,7 @@ export default function Page(): ReactElement {
           </p>
         </div>
         <button
+          type="button"
           onClick={() => setIsOpen(!isOpen)}
           className="mb-1 flex justify-end items-end text-gray-400 focus-within:text-gray-600 sm:hidden"
         >
@@ -75,7 +76,7 @@ export default function Page(): ReactElement {
           passHref
         >
           <MdAddBox className="w-8 h-12 text-blue-600 absolute ml-2" />
-          <span className="bg-white border p-3 w-full md:w-64 pl-16 rounded-lg shadow-lg shadow-zinc-300 outline-none">
+          <span className="bg-white border p-3 w-full md:w-60 pl-16 rounded-lg shadow-lg shadow-zinc-300 outline-none">
             add new user
           </span>
         </Link>
@@ -85,7 +86,7 @@ export default function Page(): ReactElement {
           return (
             <li
               key={i}
-              className="mb-5 w-96 h-20 p-10 lg:w-80 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-between items-center"
+              className="mb-5 w-96 h-20 p-10 lg:w-72 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-between items-center"
             >
               <div>
                 <p>

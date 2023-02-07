@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdMenu } from "react-icons/md";
 import { IFormInput } from "./new";
 import useSWRMutation from "swr/mutation";
 import { deleteUser, updateUser } from "../../../lib/users";
@@ -13,6 +13,8 @@ import useSWR from "swr";
 import { getUser } from "../../../lib/users";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Drawer from "../../../components/molecules/drawer";
+import SideBar from "../../../components/sideBar";
 
 export default function Page(): ReactElement {
   const router = useRouter();
@@ -37,6 +39,7 @@ export default function Page(): ReactElement {
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
   const [disabled, setDisabled] = useState<boolean>(true);
   let [isOpen, setIsOpen] = useState<boolean>(false);
+  let [open, setOpen] = useState<boolean>(false);
 
   // event handler
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -67,33 +70,41 @@ export default function Page(): ReactElement {
     <>
       <MyDialog isOpen={isOpen} setIsOpen={setIsOpen} onClick={onClick} />
       <form onSubmit={handleSubmit(onSubmit)} className="p-5 h-screen">
-        <div>
-          <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
-            <div className="flex items-center">
-              <CircleButton path="/admin/users">
-                <MdArrowBack className="text-white text-2xl" />
-              </CircleButton>
-              <p className="text-2xl font-bold drop-shadow-md shadow-black">
-                User account
-              </p>
-            </div>
-            <div className="flex">
-              <div className="hidden md:flex md:mr-2">
-                <Button type={"submit"} disabled={disabled}>
-                  Update user
-                </Button>
-                <Button
-                  type={"button"}
-                  variant="danger"
-                  onClick={() => setIsOpen(true)}
-                >
-                  Delete user
-                </Button>
-              </div>
+        <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
+          <div className="flex items-center">
+            <CircleButton path="/admin/users">
+              <MdArrowBack className="text-white text-2xl" />
+            </CircleButton>
+            <p className="text-2xl font-bold drop-shadow-md shadow-black">
+              User account
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            className="mb-1 flex justify-end items-end text-gray-400 focus-within:text-gray-600 sm:hidden"
+          >
+            <Drawer isOpen={open} setIsOpen={setOpen}>
+              <SideBar hidden={!open} />
+            </Drawer>
+            <MdMenu className="w-8 h-8" />
+          </button>
+          <div className="flex">
+            <div className="hidden md:flex md:mr-2">
+              <Button type={"submit"} disabled={disabled}>
+                Update user
+              </Button>
+              <Button
+                type={"button"}
+                variant="danger"
+                onClick={() => setIsOpen(true)}
+              >
+                Delete user
+              </Button>
             </div>
           </div>
         </div>
-        <div className="h-screen p-10 mt-10 rounded-lg grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-white lg:h-4/5 sm:p-20">
+        <div className="mt-10 p-10 rounded-lg grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-white h-screen lg:h-4/5 sm:p-20">
           <div className="flex flex-col">
             <label htmlFor="first_name">First Name</label>
             <input
