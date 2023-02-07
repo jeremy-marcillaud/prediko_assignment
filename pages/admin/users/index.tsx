@@ -12,6 +12,8 @@ import useSWR from "swr";
 import { getUsers } from "../../../lib/users";
 import Drawer from "../../../components/molecules/drawer";
 import SideBar from "../../../components/sideBar";
+import "react-toastify/dist/ReactToastify.css";
+
 // const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 export default function Page(): ReactElement {
