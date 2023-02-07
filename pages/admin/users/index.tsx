@@ -73,7 +73,7 @@ export default function Page(): ReactElement {
           />
         </div>
         <Link
-          className="w-64 relative flex items-start text-black"
+          className="w-64 lg:w-96 relative flex items-start text-black"
           href="/admin/users/new"
           passHref
         >
