@@ -6,24 +6,21 @@ import { ToastContainer } from "react-toastify";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      {Component.authPage ? (
+      <MenuLayout>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <Component {...pageProps} />
-      ) : (
-        <MenuLayout>
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={true}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-          <Component {...pageProps} />
-        </MenuLayout>
-      )}
+      </MenuLayout>
+      )
     </>
   );
 }
