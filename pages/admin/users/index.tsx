@@ -1,14 +1,22 @@
 import Link from "next/link";
 import { ReactElement, useState } from "react";
-import { MdArrowForward, MdOutlineSearch, MdAddBox } from "react-icons/md";
+import {
+  MdArrowForward,
+  MdOutlineSearch,
+  MdAddBox,
+  MdMenu,
+} from "react-icons/md";
 import CircleButton from "../../../components/atoms/circleButton";
 import Spinner from "../../../components/atoms/spinner";
 import useSWR from "swr";
 import { getUsers } from "../../../lib/users";
+import Drawer from "../../../components/atoms/drawer";
+import SideBar from "../../../components/sideBar";
 // const users = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 export default function Page(): ReactElement {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   //swr
   const { data: users, error: isError } = useSWR("/", getUsers);
@@ -35,10 +43,21 @@ export default function Page(): ReactElement {
 
   return (
     <div className="mr-0 p-16">
-      <div>
-        <p className="text-2xl font-bold drop-shadow-md shadow-black">
-          Our Users
-        </p>
+      <div className="w-96 md:w-full flex justify-between">
+        <div>
+          <p className="text-2xl font-bold drop-shadow-md shadow-black">
+            Our Users
+          </p>
+        </div>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="mb-1 flex justify-end items-end text-gray-400 focus-within:text-gray-600 sm:hidden"
+        >
+          <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
+            <SideBar hidden={!isOpen} />
+          </Drawer>
+          <MdMenu className="w-8 h-8" />
+        </button>
       </div>
       <div className="block md:flex justify-between mt-10 mb-10">
         <div className="w-96 mb-5 mr-2 relative flex items-center text-gray-400 focus-within:text-gray-600">
@@ -56,17 +75,17 @@ export default function Page(): ReactElement {
           passHref
         >
           <MdAddBox className="w-8 h-12 text-blue-600 absolute ml-2" />
-          <span className="bg-white border p-3 w-full md:w-72 pl-16 rounded-lg shadow-lg shadow-zinc-300 outline-none">
+          <span className="bg-white border p-3 w-full md:w-64 pl-16 rounded-lg shadow-lg shadow-zinc-300 outline-none">
             add new user
           </span>
         </Link>
       </div>
-      <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 pr-10">
+      <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
         {filteredData?.map((item: any, i: any) => {
           return (
             <li
               key={i}
-              className="mb-5 w-96 h-20 lg:w-80 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-around items-center"
+              className="mb-5 w-96 h-20 p-10 lg:w-80 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-between items-center"
             >
               <div>
                 <p>
