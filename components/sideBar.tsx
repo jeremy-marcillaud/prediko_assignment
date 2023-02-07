@@ -16,7 +16,7 @@ const navMenu = [
 
 export default function SideBar() {
   return (
-    <div className="w-full h-screen bg-white text-gray-500 flex flex-col justify-between items-center">
+    <div className="w-0 h-0 hidden  bg-slate-100 sm:bg-white sm:w-full sm:h-screen text-gray-500 sm:flex flex-col justify-between items-center">
       <div className="p-5 flex flex-col items-center">
         <Image
           src="/logo.png"

@@ -35,8 +35,8 @@ export default function Page(): ReactElement {
 
   // form
   const { register, handleSubmit, setValue } = useForm<IFormInput>();
-  const [disabled, setDisabled] = useState(true);
-  let [isOpen, setIsOpen] = useState(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
+  let [isOpen, setIsOpen] = useState<boolean>(false);
 
   // event handler
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -78,7 +78,7 @@ export default function Page(): ReactElement {
               </p>
             </div>
             <div className="flex">
-              <div className="mr-2">
+              <div className="hidden md:flex md:mr-2">
                 <Button type={"submit"} disabled={disabled}>
                   Update user
                 </Button>
@@ -93,12 +93,12 @@ export default function Page(): ReactElement {
             </div>
           </div>
         </div>
-        <div className="mt-10 rounded-lg grid grid-cols-3 bg-white h-4/5 p-20">
+        <div className="h-screen p-10 mt-10 rounded-lg grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-white lg:h-4/5 sm:p-20">
           <div className="flex flex-col">
             <label htmlFor="first_name">First Name</label>
             <input
               {...register("first_name", { required: true, maxLength: 20 })}
-              className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-96 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               onChange={(e) => {
                 setDisabled(false);
                 setValue("first_name", e.target.value);
@@ -113,7 +113,7 @@ export default function Page(): ReactElement {
                 pattern: /^[A-Za-z]+$/i,
                 required: true,
               })}
-              className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-96 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               onChange={(e) => {
                 setDisabled(false);
                 setValue("last_name", e.target.value);
@@ -126,7 +126,7 @@ export default function Page(): ReactElement {
             <input
               {...register("email", { required: true })}
               type="email"
-              className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-96 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               onChange={(e) => {
                 setDisabled(false);
                 setValue("email", e.target.value);
@@ -138,7 +138,7 @@ export default function Page(): ReactElement {
             <label htmlFor="role">Role</label>
             <select
               {...register("role")}
-              className="w-72 h-12 mr-10 mt-2 pl-2 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+              className="w-96 h-12 mt-2 pl-2 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
               defaultValue={user.role}
               onChange={(e) => {
                 setDisabled(false);
@@ -148,6 +148,20 @@ export default function Page(): ReactElement {
               <option value="ADMIN">Admin</option>
               <option value="DEV">Developper</option>
             </select>
+            <div className="w-96">
+              <div className="flex justify-between md:hidden">
+                <Button type={"submit"} disabled={disabled}>
+                  Update user
+                </Button>
+                <Button
+                  type={"button"}
+                  variant="danger"
+                  onClick={() => setIsOpen(true)}
+                >
+                  Delete user
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </form>

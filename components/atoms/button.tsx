@@ -23,6 +23,7 @@ export default function Button(props: Props) {
     <button
       className={classNames(
         "h-fit mr-2 rounded-lg text-xs font-medium transition-all",
+        size === "large" && "w-96 p-3 py-2 text-sm",
         size === "regular" && "w-32 p-3 py-2 text-sm",
         size === "small" && " w-24 px-2 py-2",
         variant === "regular" && "bg-emerald-300 text-white",

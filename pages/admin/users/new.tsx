@@ -62,14 +62,16 @@ export default function Page(): ReactElement {
             Add new user
           </p>
         </div>
-        <Button type="submit">Save and add</Button>
+        <div className="hidden md:flex">
+          <Button type="submit">Save and add</Button>
+        </div>
       </div>
-      <div className="mt-10 rounded-lg grid grid-cols-3 bg-white h-4/5 p-20">
+      <div className="mt-10 p-10 rounded-lg grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-white h-screen lg:h-4/5 sm:p-20">
         <div className="flex flex-col">
           <label htmlFor="first_name">First Name</label>
           <input
             {...register("first_name", { required: true, maxLength: 20 })}
-            className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-96 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           />
         </div>
         <div className="flex flex-col">
@@ -79,7 +81,7 @@ export default function Page(): ReactElement {
               pattern: /^[A-Za-z]+$/i,
               required: true,
             })}
-            className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-96 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           />
         </div>
         <div className="flex flex-col">
@@ -87,18 +89,23 @@ export default function Page(): ReactElement {
           <input
             {...register("email", { required: true })}
             type="email"
-            className="w-72 h-12 mr-10 mt-2 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-96 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           />
         </div>
         <div className="flex flex-col">
           <label htmlFor="role">Role</label>
           <select
             {...register("role")}
-            className="w-72 h-12 mr-10 mt-2 pl-2 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-96 h-12 mr-10 mt-2 pl-2 mb-10 lg:mb-0 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           >
             <option value="ADMIN">Admin</option>
             <option value="DEV">Developper</option>
           </select>
+        </div>
+        <div className="md:hidden">
+          <Button size="large" type="submit">
+            Save and add
+          </Button>
         </div>
       </div>
     </form>
