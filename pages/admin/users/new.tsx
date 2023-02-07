@@ -84,7 +84,7 @@ export default function Page(): ReactElement {
           <label htmlFor="first_name">First Name</label>
           <input
             {...register("first_name", { required: true, maxLength: 20 })}
-            className="w-96 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-64 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           />
         </div>
         <div className="flex flex-col">
@@ -94,7 +94,7 @@ export default function Page(): ReactElement {
               pattern: /^[A-Za-z]+$/i,
               required: true,
             })}
-            className="w-96 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-64 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           />
         </div>
         <div className="flex flex-col">
@@ -102,14 +102,14 @@ export default function Page(): ReactElement {
           <input
             {...register("email", { required: true })}
             type="email"
-            className="w-96 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-64 h-12 mr-10 mt-2 mb-10 lg:mb-0 lg:w-80 p-5 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           />
         </div>
         <div className="flex flex-col">
           <label htmlFor="role">Role</label>
           <select
             {...register("role")}
-            className="w-96 h-12 mr-10 mt-2 pl-2 mb-10 lg:mb-0 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+            className="w-64 h-12 mr-10 mt-2 pl-2 mb-10 lg:mb-0 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
           >
             <option value="ADMIN">Admin</option>
             <option value="DEV">Developper</option>
