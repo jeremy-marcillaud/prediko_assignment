@@ -105,73 +105,75 @@ export default function Page(): ReactElement {
             </div>
           </div>
         </div>
-        <div className="mt-10 p-10 rounded-lg grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-white h-screen lg:h-4/5 sm:p-20">
-          <div className="flex flex-col">
-            <label htmlFor="first_name">First Name</label>
-            <input
-              {...register("first_name", { required: true, maxLength: 20 })}
-              className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
-              onChange={(e) => {
-                setDisabled(false);
-                setValue("first_name", e.target.value);
-              }}
-              defaultValue={user.first_name}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="last_name">Last Name</label>
-            <input
-              {...register("last_name", {
-                pattern: /^[A-Za-z]+$/i,
-                required: true,
-              })}
-              className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
-              onChange={(e) => {
-                setDisabled(false);
-                setValue("last_name", e.target.value);
-              }}
-              defaultValue={user.last_name}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="email">Email</label>
-            <input
-              {...register("email", { required: true })}
-              type="email"
-              className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
-              onChange={(e) => {
-                setDisabled(false);
-                setValue("email", e.target.value);
-              }}
-              defaultValue={user.email}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="role">Role</label>
-            <select
-              {...register("role")}
-              className="w-64 h-12 mt-2 pl-2 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
-              defaultValue={user.role}
-              onChange={(e) => {
-                setDisabled(false);
-                setValue("role", e.target.value);
-              }}
-            >
-              <option value="ADMIN">Admin</option>
-              <option value="DEV">Developper</option>
-            </select>
-            <div className="w-64">
-              <div className="flex justify-between md:hidden">
-                <Button type={"submit"} disabled={disabled}>
-                  Update user
-                </Button>
-                <Button
-                  type={"button"}
-                  variant="danger"
-                  onClick={() => setIsOpen(true)}
-                >
-                  Delete user
-                </Button>
+        <div className="h-fit md:h-4/5 w-full bg-white">
+          <div className="mt-10 p-10 rounded-lg grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 bg-white h-1/3 sm:p-20 md:p-10">
+            <div className="flex flex-col">
+              <label htmlFor="first_name">First Name</label>
+              <input
+                {...register("first_name", { required: true, maxLength: 20 })}
+                className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+                onChange={(e) => {
+                  setDisabled(false);
+                  setValue("first_name", e.target.value);
+                }}
+                defaultValue={user.first_name}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="last_name">Last Name</label>
+              <input
+                {...register("last_name", {
+                  pattern: /^[A-Za-z]+$/i,
+                  required: true,
+                })}
+                className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+                onChange={(e) => {
+                  setDisabled(false);
+                  setValue("last_name", e.target.value);
+                }}
+                defaultValue={user.last_name}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="email">Email</label>
+              <input
+                {...register("email", { required: true })}
+                type="email"
+                className="w-64 h-12 mt-2 p-5 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+                onChange={(e) => {
+                  setDisabled(false);
+                  setValue("email", e.target.value);
+                }}
+                defaultValue={user.email}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="role">Role</label>
+              <select
+                {...register("role")}
+                className="w-64 h-12 mt-2 pl-2 mb-10 lg:w-80 rounded bg-white border shadow-lg shadow-zinc-300 outline-none"
+                defaultValue={user.role}
+                onChange={(e) => {
+                  setDisabled(false);
+                  setValue("role", e.target.value);
+                }}
+              >
+                <option value="ADMIN">Admin</option>
+                <option value="DEV">Developper</option>
+              </select>
+              <div className="w-64">
+                <div className="flex justify-between md:hidden">
+                  <Button type={"submit"} disabled={disabled}>
+                    Update user
+                  </Button>
+                  <Button
+                    type={"button"}
+                    variant="danger"
+                    onClick={() => setIsOpen(true)}
+                  >
+                    Delete user
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

@@ -44,7 +44,7 @@ export default function Page(): ReactElement {
   }
 
   return (
-    <div className=" w-screen md:max-w-screen-lg xl:max-w-screen-2xl p-16">
+    <div className=" w-full md:max-w-screen-lg xl:max-w-screen-2xl p-16">
       <div className="w-64 flex justify-between">
         <div>
           <p className="text-2xl font-bold drop-shadow-md shadow-black">
@@ -62,8 +62,8 @@ export default function Page(): ReactElement {
           <MdMenu className="w-8 h-8" />
         </button>
       </div>
-      <div className="block lg:flex justify-between mt-10 mb-10">
-        <div className="w-96 mb-5 mr-2 relative flex items-center text-gray-400 focus-within:text-gray-600">
+      <div className="block md:flex justify-between mt-10 mb-10">
+        <div className="w-full md:w-96 mb-5 mr-2 relative flex items-center text-gray-400 focus-within:text-gray-600">
           <MdOutlineSearch className="w-5 h-5 absolute ml-3" />
           <input
             type="search"
@@ -73,22 +73,22 @@ export default function Page(): ReactElement {
           />
         </div>
         <Link
-          className="w-64 lg:w-96 relative flex items-start text-black"
+          className="w-64 lg:full relative flex items-start text-black"
           href="/admin/users/new"
           passHref
         >
           <MdAddBox className="w-8 h-12 text-blue-600 absolute ml-2" />
-          <span className="bg-white border p-3 w-full lg:w-60 pl-16 rounded-lg shadow-lg shadow-zinc-300 outline-none">
+          <span className="bg-white border p-3 w-full md:w-48 pl-16 rounded-lg shadow-lg shadow-zinc-300 outline-none">
             add new user
           </span>
         </Link>
       </div>
-      <ul className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+      <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {filteredData?.map((item: any, i: any) => {
           return (
             <li
               key={i}
-              className="mb-5 w-64 h-20 p-10 lg:w-72 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-between items-center"
+              className="mb-5 w-64 h-20 p-10 lg:w-80 bg-white border rounded-lg shadow-lg shadow-zinc-300 flex justify-between items-center"
             >
               <div>
                 <p>
