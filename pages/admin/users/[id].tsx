@@ -11,6 +11,7 @@ import { getUser } from "../../../lib/users";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavDashboard from "../../../components/molecules/navDashboard";
+import MyDialog from "../../../components/modal";
 
 export default function Page(): ReactElement {
   const router = useRouter();
@@ -49,6 +50,16 @@ export default function Page(): ReactElement {
     }
   };
 
+  const onClick = async () => {
+    try {
+      await deleteUser(`/${userId}` as string);
+      successDeleted();
+      router.push("/admin/users");
+    } catch (e) {
+      errorMutate();
+    }
+  };
+
   if ((!user && !isError) || isMutating) {
     return <Spinner />;
   }
@@ -56,6 +67,7 @@ export default function Page(): ReactElement {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="p-5 h-screen">
+        <MyDialog isOpen={isOpen} setIsOpen={setIsOpen} onClick={onClick} />
         <NavDashboard setOpen={setOpen} open={open} variant="update">
           User account
         </NavDashboard>
