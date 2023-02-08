@@ -1,20 +1,16 @@
 import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { MdArrowBack, MdMenu } from "react-icons/md";
 import { IFormInput } from "./new";
 import useSWRMutation from "swr/mutation";
 import { deleteUser, updateUser } from "../../../lib/users";
 import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
-import CircleButton from "../../../components/atoms/circleButton";
-import MyDialog from "../../../components/modal";
 import useSWR from "swr";
 import { getUser } from "../../../lib/users";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Drawer from "../../../components/molecules/drawer";
-import SideBar from "../../../components/sideBar";
+import NavDashboard from "../../../components/molecules/navDashboard";
 
 export default function Page(): ReactElement {
   const router = useRouter();
@@ -53,58 +49,16 @@ export default function Page(): ReactElement {
     }
   };
 
-  const onClick = async () => {
-    try {
-      await deleteUser(`/${userId}` as string);
-      successDeleted();
-      router.push("/admin/users");
-    } catch (e) {
-      errorMutate();
-    }
-  };
-
   if ((!user && !isError) || isMutating) {
     return <Spinner />;
   }
 
   return (
     <>
-      <MyDialog isOpen={isOpen} setIsOpen={setIsOpen} onClick={onClick} />
       <form onSubmit={handleSubmit(onSubmit)} className="p-5 h-screen">
-        <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
-          <div className="flex items-center">
-            <CircleButton path="/admin/users">
-              <MdArrowBack className="text-white text-2xl" />
-            </CircleButton>
-            <p className="text-2xl font-bold drop-shadow-md shadow-black">
-              User account
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setOpen(!open)}
-            className="mb-1 flex justify-end items-end text-gray-400 focus-within:text-gray-600 sm:hidden"
-          >
-            <Drawer isOpen={open} setIsOpen={setOpen}>
-              <SideBar hidden={!open} />
-            </Drawer>
-            <MdMenu className="w-8 h-8" />
-          </button>
-          <div className="flex">
-            <div className="hidden md:flex md:mr-2">
-              <Button type={"submit"} disabled={disabled}>
-                Update user
-              </Button>
-              <Button
-                type={"button"}
-                variant="danger"
-                onClick={() => setIsOpen(true)}
-              >
-                Delete user
-              </Button>
-            </div>
-          </div>
-        </div>
+        <NavDashboard setOpen={setOpen} open={open} variant="update">
+          User account
+        </NavDashboard>
         <div className="h-fit md:h-4/5 w-full bg-white">
           <div className="mt-10 p-10 rounded-lg grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 bg-white h-1/3 sm:p-20 md:p-10">
             <div className="flex flex-col">

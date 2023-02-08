@@ -1,17 +1,14 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { MdArrowBack, MdMenu } from "react-icons/md";
 import { useRouter } from "next/router";
 
 import useSWRMutation from "swr/mutation";
 import { createUser } from "../../../lib/users";
 import Spinner from "../../../components/atoms/spinner";
 import Button from "../../../components/atoms/button";
-import CircleButton from "../../../components/atoms/circleButton";
 import { ReactElement, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Drawer from "../../../components/molecules/drawer";
-import SideBar from "../../../components/sideBar";
+import NavDashboard from "../../../components/molecules/navDashboard";
 
 export interface IFormInput {
   id: string;
@@ -56,29 +53,9 @@ export default function Page(): ReactElement {
 
   return (
     <form className="h-screen p-5" onSubmit={handleSubmit(onSubmit)}>
-      <div className="w-full bg-white h-1/6 p-10 rounded-lg flex justify-between items-center">
-        <div className="flex items-center">
-          <CircleButton path="/admin/users">
-            <MdArrowBack className="text-white text-2xl" />
-          </CircleButton>
-          <p className="text-2xl font-bold drop-shadow-md shadow-black">
-            Add new user
-          </p>
-        </div>
-        <div className="hidden md:flex">
-          <Button type="submit">Save and add</Button>
-        </div>
-        <button
-          type="button"
-          onClick={() => setOpen(!open)}
-          className="mb-1 flex justify-end items-end text-gray-400 focus-within:text-gray-600 sm:hidden"
-        >
-          <Drawer isOpen={open} setIsOpen={setOpen}>
-            <SideBar hidden={!open} />
-          </Drawer>
-          <MdMenu className="w-8 h-8" />
-        </button>
-      </div>
+      <NavDashboard setOpen={setOpen} open={open} variant="save">
+        Add new user
+      </NavDashboard>
       <div className="mt-10 p-10 rounded-lg grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 bg-white h-screen lg:h-4/5 sm:p-20">
         <div className="flex flex-col">
           <label htmlFor="first_name">First Name</label>

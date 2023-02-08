@@ -9,10 +9,10 @@ export default function AuthForm() {
   }
 
   return (
-    <div className="bg-slate-100 w-screen h-screen">
+    <div className="bg-slate-100 w-screen h-screen ">
       <div className="flex justify-center items-center h-full">
         <form
-          className="bg-white rounded w-2/6 h-3/5 flex justify-evenly flex-col items-center text-black"
+          className="bg-white rounded w-full h-full max-w-md max-h-96 flex justify-evenly flex-col items-center text-black"
           onSubmit={handleSubmit}
         >
           <h2>Signin to your account</h2>
@@ -23,7 +23,7 @@ export default function AuthForm() {
               placeholder="john@doe.com"
               type="email"
               name="email"
-              className={"p-2 w-96 h-12 rounded bg-slate-100"}
+              className={"p-2 w-80   rounded bg-slate-100"}
             />
           </div>
           <div>
@@ -33,7 +33,7 @@ export default function AuthForm() {
               placeholder="123456 is not a good idea"
               type="password"
               name="password"
-              className={"p-2 w-96 h-12 rounded bg-slate-100"}
+              className={"p-2 w-80  rounded bg-slate-100"}
             />
           </div>
           <button type="submit">Signin</button>
